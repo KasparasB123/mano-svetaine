@@ -120,3 +120,43 @@
 </script>
 </body>
 </html>
+```[cite: 1]
+
+---
+
+### Kodo paaiškinimas
+
+Šis kodas sukuria interaktyvią maisto užsakymo simuliaciją naršyklėje, kurioje vartotojas gali rinktis patiekalus, matyti krepšelį, pateikti užsakymą (kuris palaipsniui keičia būsenas) ir rinkti patirties taškus (XP) bei lygius už aktyvumą. 
+
+Kodą galima padalinti į 3 pagrindines dalis: **HTML struktūrą**, **CSS stilius** ir **JavaScript logiką**.
+
+#### 1. HTML dalis (Struktūra)
+* `<!DOCTYPE html>` ir `<html lang="lt">`: nurodo naršyklei, kad tai yra modernus HTML5 dokumentas lietuvių kalba[cite: 1].
+* `<head>`: talpina techninę informaciją, puslapio pavadinimą (*Title*) bei vizualinius stilius (*CSS*).
+* `<header>`: puslapio viršus, kuriame rodomas žaidimo pavadinimas ir **žaidėjo lygio/XP juosta** (`#lvl`, `#xp`, `#xpfill`)[cite: 1].
+* `<div class="notice">`: informacinis pranešimas, kad tai tik simuliacija[cite: 1].
+* `<main class="wrap">`: pagrindinis puslapio turinys, suskirstytas į tris dalis:
+  1. **Meniu** (`id="menu"`): vieta, kur JavaScript dinamiškai sugeneruoja patiekalų sąrašą[cite: 1].
+  2. **Krepšelis** (`id="cart"` ir mygtukas `id="order"`): rodo pasirinktas prekes ir leidžia pateikti užsakymą[cite: 1].
+  3. **Užsakymo eiga** (`id="steps"`): sąrašas (`<ol>`), kuriame vizualiai atvaizduojami užsakymo žingsniai[cite: 1].
+
+#### 2. CSS dalis (Stiliai)
+* Apibrėžia šriftus (`Arial`), centravimą (`max-width: 640px; margin: 0 auto`), elementų išdėstymą naudojant `flexbox` (`display: flex`)[cite: 1].
+* Nuspalvina mygtukus mėlyna spalva (`#1f4fd8`), nustato jų paspaudimo (`:hover`) ir neaktyvios būsenos (`:disabled`) spalvas[cite: 1].
+* Sukuria stilių užsakymo eigos žingsniams (`ol li`, `.done`, `.now`), kad atlikti žingsniai būtų paryškinti mėlyna linija, o dabartinis veiksmas būtų nusakomas storesniu šriftu[cite: 1].
+
+#### 3. JavaScript dalis (Funkcionalumas)
+Visa žaidimo logika parašyta skripte (`<script>`):
+* **Prekės ir kintamieji (`items`, `stepNames`, `cart`, `xp`)**: 
+  * Sukuriamas maisto prekių masyvas su pavadinimais ir kainomis (cepelinai, pica, burgeris ir kt.)[cite: 1].
+  * Apibrėžiami užsakymo etapai (`stepNames`): *Užsakymas priimtas*, *Ruošiamas*, *Kurjeris kelyje*, *Pristatyta*[cite: 1].
+* **Meniu generavimas**: 
+  * Naudojant `.map()` funkciją, `items` masyvas paverčiamas HTML elementais ir įterpiamas į `#menu` bloką[cite: 1]. Kiekviena prekė gauna mygtuką su funkcijos iškvietimu `add(i)`.
+* **Krepšelio valdymas (`add(i)`)**: 
+  * Kai vartotojas paspaudžia „Pridėti“, prekė įkeliama į `cart` masyvą, apskaičiuojama bendra krepšelio suma ir aktyvuojamas užsakymo pateikimo mygtukas[cite: 1].
+* **Užsakymo eiga ir laiko delsa (`setTimeout`)**: 
+  * Paspaudus „Pateikti užsakymą“, krepšelis ištuštinamas, mygtukas išjungiamas ir pridedami pradiniai XP taškai[cite: 1].
+  * Naudojant `setTimeout`, kas 4 sekundes automatiškai keičiasi užsakymo būsenos žingsniai (nuo priėmimo iki pristatymo), o sėkmingai pristaturs užsakymą suteikiama papildoma XP bonuso porcija[cite: 1].
+* **XP ir lygių sistema (`add(n)`)**: 
+  * Kiekvienas veiksmas padidina bendrą XP skaičių[cite: 1]. 
+  * Kai XP pasiekia 100, automatiškai pakeliamas žaidėjo lygis (`Lygis = XP / 100 + 1`), o procentinė juosta (`#xpfill`) vizualiai užsipildo[cite: 1].
